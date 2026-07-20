@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>D Deals – Premium Deals in Accra</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--black:#0a0a0a;--gold:#c9a84c;--goldL:#e8c97a;--white:#f5f5f0;--grey:#1a1a1a;--grey2:#222;--muted:#888;--red:#ef4444;--green:#22c55e}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--black);color:var(--white);font-family:Inter,sans-serif;font-weight:300}
+a{text-decoration:none;color:inherit}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,10,10,.96);backdrop-filter:blur(12px);border-bottom:1px solid #1f1f1f;padding:0 24px;height:62px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);letter-spacing:2px;cursor:pointer}
+.navLinks{display:flex;gap:22px;align-items:center;list-style:none}
+.navLinks a,.navLinks button{color:var(--muted);font-size:13px;letter-spacing:1px;text-transform:uppercase;transition:color .2s;background:none;border:none;cursor:pointer;font-family:Inter,sans-serif}
+.navLinks a:hover,.navLinks button:hover{color:var(--gold)}
+.navWa{background:var(--gold)!important;color:#000!important;padding:8px 16px;border-radius:2px;font-weight:600!important}
+.navRight{display:flex;gap:12px;align-items:center}
+.navIcon{background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;position:relative;transition:color .2s}
+.navIcon:hover{color:var(--gold)}
+.cartBadge{position:absolute;top:-6px;right:-6px;background:var(--gold);color:#000;width:16px;height:16px;border-radius:50%;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 22px;border:none;border-radius:2px;font-family:Inter,sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;letter-spacing:.5px}
+.btnGold{background:var(--gold);color:#000}
+.btnGold:hover{background:var(--goldL)}
+.btnOut{border:1px solid #333;color:var(--white);background:transparent}
+.btnOut:hover{border-color:var(--gold);color:var(--gold)}
+.btnFull{width:100%}
+.btnSm{padding:8px 16px;font-size:12px}
+/* FORMS */
+.fg{margin-bottom:14px}
+label{display:block;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+input,select,textarea{width:100%;background:#111;border:1px solid #222;color:var(--white);padding:10px 13px;border-radius:4px;font-family:Inter,sans-serif;font-size:14px;outline:none;transition:border-color .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+/* HERO */
+.hero{padding-top:62px;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(201,168,76,.07),transparent 70%);pointer-events:none}
+.heroEye{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(38px,8vw,84px);line-height:1.05;margin-bottom:22px;max-width:800px}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero p{font-size:15px;color:var(--muted);max-width:420px;line-height:1.7;margin-bottom:38px}
+.heroCta{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+/* SECTION */
+.section{padding:80px 24px;max-width:1200px;margin:0 auto}
+.sLabel{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.sTitle{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,40px);margin-bottom:40px}
+/* CATS */
+.cats{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px}
+.catBtn{background:var(--grey);border:1px solid #222;color:var(--muted);padding:10px 18px;font-size:12px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:all .2s;font-family:Inter,sans-serif}
+.catBtn:hover,.catBtn.active{background:var(--gold);color:#000;border-color:var(--gold)}
+/* PRODUCTS */
+#productsGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
+.productCard{background:var(--grey);border:1px solid #1f1f1f;border-radius:4px;overflow:hidden;transition:border-color .2s,transform .2s}
+.productCard:hover{border-color:#5a4a20;transform:translateY(-2px)}
+.productMedia{width:100%;aspect-ratio:1;background:#111;display:flex;align-items:center;justify-content:center;font-size:44px;overflow:hidden;cursor:pointer}
+.productMedia img,.productMedia video{width:100%;height:100%;object-fit:cover}
+.productInfo{padding:16px}
+.productCat{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.productName{font-size:15px;font-weight:500;margin-bottom:4px;cursor:pointer}
+.productDesc{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:12px}
+.productFoot{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.productPrice{font-family:'Playfair Display',serif;font-size:18px;color:var(--gold)}
+.addCartBtn{background:transparent;border:1px solid #5a4a20;color:var(--gold);padding:7px 13px;font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:all .2s;font-family:Inter,sans-serif}
+.addCartBtn:hover{background:var(--gold);color:#000}
+.emptyGrid{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted)}
+/* WHY */
+.whySec{background:#111;border-top:1px solid #1f1f1f;border-bottom:1px solid #1f1f1f}
+.whyGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:28px}
+.whyItem{text-align:center}
+.whyIcon{font-size:26px;margin-bottom:10px}
+.whyTitle{font-size:14px;font-weight:600;color:var(--gold);margin-bottom:5px}
+.whyTxt{font-size:13px;color:var(--muted);line-height:1.6}
+/* CTA */
+.ctaBanner{text-align:center;padding:80px 24px;border-top:1px solid #1f1f1f}
+.ctaBanner h2{font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,38px);margin-bottom:14px}
+.ctaBanner p{color:var(--muted);font-size:14px;margin-bottom:28px}
+/* FOOTER */
+footer{background:#050505;border-top:1px solid #1a1a1a;padding:36px 24px;text-align:center}
+.footLogo{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);letter-spacing:2px;margin-bottom:10px}
+footer p{font-size:12px;color:var(--muted);margin-bottom:4px}
+footer a{color:var(--gold)}
+/* OVERLAY PANELS */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:300;align-items:flex-start;justify-content:flex-end}
+.overlay.open{display:flex}
+.panel{background:var(--grey);border-left:1px solid #2a2a2a;width:100%;max-width:400px;height:100vh;overflow-y:auto;padding:28px;position:relative;animation:slideIn .3s ease}
+@keyframes slideIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
+.panelClose{position:absolute;top:18px;right:18px;background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer}
+.panelTitle{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:24px}
+/* MODAL */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:400;align-items:center;justify-content:center;padding:20px}
+.modal.open{display:flex}
+.modalBox{background:var(--grey);border:1px solid #2a2a2a;border-radius:8px;width:100%;max-width:460px;max-height:90vh;overflow-y:auto;padding:28px;position:relative}
+.modalClose{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer}
+.modalTitle{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:20px;color:var(--gold)}
+.modalTabs{display:flex;gap:0;margin-bottom:24px;border-bottom:1px solid #2a2a2a}
+.modalTab{flex:1;padding:10px;background:none;border:none;color:var(--muted);font-family:Inter,sans-serif;font-size:13px;cursor:pointer;transition:all .2s;border-bottom:2px solid transparent}
+.modalTab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.tabContent{display:none}
+.tabContent.active{display:block}
+/* CART */
+.cartItem{display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid #222}
+.cartThumb{width:56px;height:56px;border-radius:4px;background:#111;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px}
+.cartThumb img,.cartThumb video{width:100%;height:100%;object-fit:cover}
+.cartInfo{flex:1}
+.cartName{font-size:13px;font-weight:500;margin-bottom:3px}
+.cartPrice{font-size:13px;color:var(--gold)}
+.cartRm{background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;transition:color .2s}
+.cartRm:hover{color:var(--red)}
+.cartEmpty{text-align:center;padding:40px 20px;color:var(--muted)}
+.cartTotal{display:flex;justify-content:space-between;padding:16px 0;font-weight:600;border-top:1px solid #222;margin-top:8px}
+.cartTotalPrice{color:var(--gold);font-family:'Playfair Display',serif;font-size:18px}
+/* PRODUCT DETAIL MODAL */
+.pdImages{display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:16px}
+.pdMainImg{width:100%;aspect-ratio:4/3;background:#111;border-radius:4px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:60px}
+.pdMainImg img,.pdMainImg video{width:100%;height:100%;object-fit:cover}
+.pdThumbs{display:flex;gap:8px;overflow-x:auto}
+.pdThumb{width:60px;height:60px;border-radius:4px;overflow:hidden;border:2px solid transparent;cursor:pointer;flex-shrink:0;background:#111;display:flex;align-items:center;justify-content:center}
+.pdThumb.active{border-color:var(--gold)}
+.pdThumb img,.pdThumb video{width:100%;height:100%;object-fit:cover}
+.pdName{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:6px}
+.pdCat{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.pdDesc{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:10px}
+.pdSizes{font-size:12px;color:var(--muted);margin-bottom:14px}
+.pdPrice{font-family:'Playfair Display',serif;font-size:26px;color:var(--gold);margin-bottom:20px}
+.pdActions{display:flex;gap:10px}
+/* TOAST */
+.toast{position:fixed;bottom:90px;right:24px;padding:11px 18px;border-radius:8px;font-size:13px;font-weight:500;z-index:999;display:none;max-width:280px}
+.toast.ok{background:var(--green);color:#fff}
+.toast.err{background:var(--red);color:#fff}
+.toast.info{background:#1e2030;color:var(--gold);border:1px solid var(--gold)}
+/* USER AVATAR */
+.userAvatar{width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#000;cursor:pointer}
+/* BROADCAST BANNER */
+.broadcastBanner{background:linear-gradient(135deg,#1a1500,#2a2000);border:1px solid var(--gold);border-radius:4px;padding:14px 18px;margin-bottom:24px;display:none}
+.broadcastBanner p{font-size:13px;line-height:1.6}
+/* CHATBOT */
+.chatWidget{position:fixed;bottom:24px;right:24px;z-index:500}
+.chatToggle{width:54px;height:54px;background:var(--gold);border:none;border-radius:50%;font-size:22px;cursor:pointer;box-shadow:0 4px 20px rgba(201,168,76,.4);transition:transform .2s}
+.chatToggle:hover{transform:scale(1.08)}
+.chatBox{display:none;position:absolute;bottom:66px;right:0;width:310px;background:var(--grey);border:1px solid #2a2a2a;border-radius:14px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.5);flex-direction:column}
+.chatBox.open{display:flex}
+.chatHead{background:#111;padding:13px 15px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #222}
+.chatAva{width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px}
+.chatBotName{font-size:13px;font-weight:600}
+.chatStatus{font-size:10px;color:var(--green)}
+.chatCloseBtn{margin-left:auto;background:none;border:none;color:var(--muted);font-size:17px;cursor:pointer}
+.chatMsgs{height:240px;overflow-y:auto;padding:13px;display:flex;flex-direction:column;gap:9px}
+.cmsg{display:flex;gap:7px;align-items:flex-end}
+.cmsg.user{flex-direction:row-reverse}
+.cbubble{background:#222;padding:8px 11px;border-radius:12px;font-size:12px;line-height:1.6;max-width:82%;color:var(--white)}
+.cbubble a{color:var(--gold)}
+.cmsg.user .cbubble{background:rgba(201,168,76,.18);color:var(--gold)}
+.cava{width:24px;height:24px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+.chatInp{display:flex;gap:7px;padding:11px;border-top:1px solid #222;background:#111}
+.chatInp input{flex:1;background:#0a0a0a;border:1px solid #222;color:var(--white);padding:8px 11px;border-radius:6px;font-size:13px;outline:none;font-family:Inter,sans-serif}
+.chatInp input:focus{border-color:var(--gold)}
+.chatSend{background:var(--gold);border:none;color:#000;width:32px;height:32px;border-radius:6px;font-size:15px;cursor:pointer;font-weight:700}
+.typingDots{display:flex;gap:4px;padding:3px 0;align-items:center}
+.typingDots span{width:5px;height:5px;background:var(--muted);border-radius:50%;animation:td 1.2s infinite}
+.typingDots span:nth-child(2){animation-delay:.2s}
+.typingDots span:nth-child(3){animation-delay:.4s}
+@keyframes td{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+@media(max-width:640px){.navLinks{display:none}.chatBox{width:calc(100vw - 48px)}.panel{max-width:100%}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo" onclick="scrollTo(0,0)">D Deals</div>
+  <ul class="navLinks">
+    <li><a href="#products">Shop</a></li>
+    <li><a href="#why">About</a></li>
+    <li><a id="navWa" href="https://wa.me/233539598008" target="_blank" class="navWa">WhatsApp</a></li>
+  </ul>
+  <div class="navRight">
+    <button class="navIcon" onclick="openCart()" title="Cart">🛒<span class="cartBadge" id="cartBadge" style="display:none">0</span></button>
+    <div id="userNavArea"></div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="heroEye">Accra, Ghana — Premium Deals</p>
+  <h1>Where <em>Style</em> Meets<br/>Every Deal</h1>
+  <p>Watches, jewelry, sneakers, bags, glasses, customized gifts and more.</p>
+  <div class="heroCta">
+    <a href="#products" class="btn btnGold">Shop Now</a>
+    <button class="btn btnOut" onclick="openAuth()">Create Account</button>
+  </div>
+  <div id="broadcastBanner" class="broadcastBanner" style="margin-top:32px;max-width:560px"></div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="section">
+    <p class="sLabel">Our Collection</p>
+    <h2 class="sTitle">Shop by Category</h2>
+    <div class="cats" id="catFilters"></div>
+    <div id="productsGrid"></div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why" class="whySec">
+  <div class="section">
+    <p class="sLabel">Why D Deals</p>
+    <h2 class="sTitle">Built Different</h2>
+    <div class="whyGrid">
+      <div class="whyItem"><div class="whyIcon">💎</div><div class="whyTitle">Premium Quality</div><div class="whyTxt">Every product carefully selected and quality-checked.</div></div>
+      <div class="whyItem"><div class="whyIcon">✍️</div><div class="whyTitle">Customizable</div><div class="whyTxt">Names, photos, messages — we personalize gifts.</div></div>
+      <div class="whyItem"><div class="whyIcon">🚀</div><div class="whyTitle">Fast Delivery</div><div class="whyTxt">We deliver across Accra quickly.</div></div>
+      <div class="whyItem"><div class="whyIcon">💬</div><div class="whyTitle">WhatsApp Orders</div><div class="whyTxt">Simple ordering directly on WhatsApp.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="ctaBanner">
+  <h2>Can't Find What You're Looking For?</h2>
+  <p>Message us on WhatsApp and we'll sort you out</p>
+  <a id="ctaWa" href="https://wa.me/233539598008" target="_blank" class="btn btnGold">Chat With Us</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footLogo">D Deals</div>
+  <p>Premium deals delivered in Accra, Ghana</p>
+  <p>📞 <a id="footWa" href="https://wa.me/233539598008">+233 539 598 008</a></p>
+  <p style="margin-top:14px;font-size:11px">© 2026 D Deals. All rights reserved.</p>
+</footer>
+
+<!-- CART PANEL -->
+<div class="overlay" id="cartOverlay" onclick="if(event.target===this)closeCart()">
+  <div class="panel">
+    <button class="panelClose" onclick="closeCart()">✕</button>
+    <div class="panelTitle">🛒 Your Cart</div>
+    <div id="cartItems"></div>
+    <div id="cartFooter" style="display:none">
+      <div class="cartTotal"><span>Total</span><span class="cartTotalPrice" id="cartTotal">GH₵0</span></div>
+      <a id="cartWaBtn" href="#" target="_blank" class="btn btnGold btnFull" style="margin-top:12px">Order via WhatsApp 💬</a>
+      <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:10px">Click above to send your cart to WhatsApp</p>
+    </div>
+  </div>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="modal" id="authModal" onclick="if(event.target===this)closeAuth()">
+  <div class="modalBox">
+    <button class="modalClose" onclick="closeAuth()">✕</button>
+    <div class="modalTitle">Welcome to D Deals</div>
+    <div class="modalTabs">
+      <button class="modalTab active" id="loginTab" onclick="switchTab('login')">Sign In</button>
+      <button class="modalTab" id="signupTab" onclick="switchTab('signup')">Create Account</button>
+    </div>
+    <!-- LOGIN -->
+    <div class="tabContent active" id="loginContent">
+      <div class="fg"><label>Email</label><input type="email" id="loginEmail" placeholder="your@email.com"/></div>
+      <div class="fg"><label>Password</label><input type="password" id="loginPw" placeholder="••••••••"/></div>
+      <button class="btn btnGold btnFull" onclick="doLogin()">Sign In</button>
+      <p style="text-align:center;margin-top:14px;font-size:12px;color:var(--muted)">Don't have an account? <button onclick="switchTab('signup')" style="background:none;border:none;color:var(--gold);cursor:pointer;font-size:12px">Create one</button></p>
+    </div>
+    <!-- SIGNUP -->
+    <div class="tabContent" id="signupContent">
+      <div class="fg"><label>Full Name</label><input type="text" id="signupName" placeholder="Your name"/></div>
+      <div class="fg"><label>Email</label><input type="email" id="signupEmail" placeholder="your@email.com"/></div>
+      <div class="fg"><label>Phone (WhatsApp)</label><input type="tel" id="signupPhone" placeholder="0539598008"/></div>
+      <div class="fg"><label>Password</label><input type="password" id="signupPw" placeholder="Choose a password"/></div>
+      <button class="btn btnGold btnFull" onclick="doSignup()">Create Account</button>
+    </div>
+  </div>
+</div>
+
+<!-- ACCOUNT PANEL -->
+<div class="overlay" id="accountOverlay" onclick="if(event.target===this)closeAccount()">
+  <div class="panel">
+    <button class="panelClose" onclick="closeAccount()">✕</button>
+    <div class="panelTitle" id="accountName">My Account</div>
+    <div id="accountEmail" style="font-size:13px;color:var(--muted);margin-bottom:24px"></div>
+    <div style="margin-bottom:24px">
+      <p style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Order History</p>
+      <div id="orderHistory"></div>
+    </div>
+    <button class="btn btnOut btnFull btnSm" onclick="doLogout()">Sign Out</button>
+  </div>
+</div>
+
+<!-- PRODUCT DETAIL MODAL -->
+<div class="modal" id="pdModal" onclick="if(event.target===this)closePd()">
+  <div class="modalBox">
+    <button class="modalClose" onclick="closePd()">✕</button>
+    <div id="pdMainMedia" class="pdMainImg" style="margin-bottom:8px"></div>
+    <div class="pdThumbs" id="pdThumbs"></div>
+    <br/>
+    <div class="pdCat" id="pdCat"></div>
+    <div class="pdName" id="pdName"></div>
+    <div class="pdDesc" id="pdDesc"></div>
+    <div class="pdSizes" id="pdSizes"></div>
+    <div class="pdPrice" id="pdPrice"></div>
+    <div class="pdActions">
+      <button class="btn btnGold" onclick="addToCartFromModal()" style="flex:1">Add to Cart 🛒</button>
+      <a id="pdWa" href="#" target="_blank" class="btn btnOut">WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<!-- CHATBOT -->
+<div class="chatWidget">
+  <div class="chatBox" id="chatBox">
+    <div class="chatHead">
+      <div class="chatAva">🤖</div>
+      <div><div class="chatBotName" id="chatBotName">D Deals Assistant</div><div class="chatStatus">● Online</div></div>
+      <button class="chatCloseBtn" onclick="toggleChat()">✕</button>
+    </div>
+    <div class="chatMsgs" id="chatMsgs"></div>
+    <div class="chatInp">
+      <input type="text" id="chatInput" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter')sendChat()"/>
+      <button class="chatSend" onclick="sendChat()">➤</button>
+    </div>
+  </div>
+  <button class="chatToggle" onclick="toggleChat()">💬</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════
+// CONFIG & STATE
+// ══════════════════════════════════════════
+var WA = '233539598008';
+var EMAILJS_SVC = '', EMAILJS_TPL = '', EMAILJS_KEY = '';
+var allProducts = [], allCategories = [], botCfg = {
+  name:'D Deals Assistant',
+  welcome:"Hi! 👋 What can I help you find today?",
+  info:'We sell watches, jewelry, sneakers, bags, glasses and customized gifts in Accra Ghana. Delivery within Accra. Payment via MTN MoMo. Fixed prices.'
+};
+var cart = [], currentUser = null, activeCategory = 'all', currentPdProduct = null;
+var chatHistory = [], chatOpened = false;
+
+// ══════════════════════════════════════════
+// LOAD DATA
+// ══════════════════════════════════════════
+function loadData(){
+  var p=ls('dd_products'), c=ls('dd_categories'), s=ls('dd_settings'), b=ls('dd_bot'), ejs=ls('dd_emailjs');
+  if(p) allProducts=JSON.parse(p);
+  if(c) allCategories=JSON.parse(c);
+  if(s){var ss=JSON.parse(s);if(ss.wa)WA=ss.wa;}
+  if(b) botCfg=Object.assign(botCfg,JSON.parse(b));
+  if(ejs){var e=JSON.parse(ejs);EMAILJS_SVC=e.svc||'';EMAILJS_TPL=e.tpl||'';EMAILJS_KEY=e.key||'';}
+  if(!allCategories.length) allCategories=[
+    {id:'watches',name:'Watches',emoji:'⌚'},{id:'jewelry',name:'Jewelry',emoji:'💎'},
+    {id:'sneakers',name:'Sneakers',emoji:'👟'},{id:'bags',name:'Bags',emoji:'👜'},
+    {id:'glasses',name:'Glasses',emoji:'🕶️'},{id:'gifts',name:'Customized Gifts',emoji:'🎁'},
+    {id:'phones',name:'Phones',emoji:'📱'}
+  ];
+  updateWaLinks();
+  document.getElementById('chatBotName').textContent = botCfg.name;
+  // Apply appearance settings
+  applyAppearance();
+  // Load broadcast
+  var bc=ls('dd_broadcast');
+  if(bc){var bcObj=JSON.parse(bc);if(bcObj.active&&bcObj.msg){var bb=document.getElementById('broadcastBanner');bb.style.display='block';bb.innerHTML='<p>📢 '+bcObj.msg+'</p>';}}
+}
+function ls(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+function updateWaLinks(){
+  var url='https://wa.me/'+WA;
+  ['navWa','ctaWa','footWa'].forEach(function(id){var el=document.getElementById(id);if(el)el.href=url;});
+}
+
+// ══════════════════════════════════════════
+// USER AUTH
+// ══════════════════════════════════════════
+function loadUser(){
+  var u=ls('dd_currentUser');
+  if(u){currentUser=JSON.parse(u);renderUserNav();}
+  else{document.getElementById('userNavArea').innerHTML='<button class="btn btnSm btnOut" onclick="openAuth()" style="font-size:11px">Sign In</button>';}
+  // Load user's cart
+  if(currentUser){
+    var uc=ls('dd_cart_'+currentUser.email);
+    if(uc) cart=JSON.parse(uc);
+  } else {
+    var gc=ls('dd_cart_guest');
+    if(gc) cart=JSON.parse(gc);
+  }
+  updateCartBadge();
+}
+function renderUserNav(){
+  var initials=(currentUser.name||'U').split(' ').map(function(w){return w[0];}).join('').substring(0,2).toUpperCase();
+  document.getElementById('userNavArea').innerHTML='<div class="userAvatar" onclick="openAccount()" title="My Account">'+initials+'</div>';
+}
+function doLogin(){
+  var email=document.getElementById('loginEmail').value.trim();
+  var pw=document.getElementById('loginPw').value;
+  if(!email||!pw){showToast('Please fill all fields','err');return;}
+  var users=JSON.parse(ls('dd_users')||'[]');
+  var user=users.find(function(u){return u.email===email&&u.pw===btoa(pw);});
+  if(!user){showToast('Wrong email or password','err');return;}
+  // Merge guest cart
+  var gc=JSON.parse(ls('dd_cart_guest')||'[]');
+  var uc=JSON.parse(ls('dd_cart_'+email)||'[]');
+  cart=mergeCart(uc,gc);
+  localStorage.setItem('dd_cart_'+email,JSON.stringify(cart));
+  localStorage.removeItem('dd_cart_guest');
+  currentUser=user;
+  localStorage.setItem('dd_currentUser',JSON.stringify(user));
+  renderUserNav();
+  updateCartBadge();
+  closeAuth();
+  showToast('Welcome back, '+user.name.split(' ')[0]+'! 👋','ok');
+}
+function doSignup(){
+  var name=document.getElementById('signupName').value.trim();
+  var email=document.getElementById('signupEmail').value.trim();
+  var phone=document.getElementById('signupPhone').value.trim();
+  var pw=document.getElementById('signupPw').value;
+  if(!name||!email||!pw){showToast('Please fill all required fields','err');return;}
+  var users=JSON.parse(ls('dd_users')||'[]');
+  if(users.find(function(u){return u.email===email;})){showToast('Email already registered','err');return;}
+  var newUser={name:name,email:email,phone:phone,pw:btoa(pw),joined:new Date().toISOString(),orders:[]};
+  users.push(newUser);
+  localStorage.setItem('dd_users',JSON.stringify(users));
+  // Merge guest cart
+  var gc=JSON.parse(ls('dd_cart_guest')||'[]');
+  cart=gc;
+  localStorage.setItem('dd_cart_'+email,JSON.stringify(cart));
+  localStorage.removeItem('dd_cart_guest');
+  currentUser=newUser;
+  localStorage.setItem('dd_currentUser',JSON.stringify(newUser));
+  renderUserNav();
+  updateCartBadge();
+  closeAuth();
+  showToast('Account created! Welcome, '+name.split(' ')[0]+' 🎉','ok');
+  // Notify admin
+  logNotification(name+' ('+email+') just created an account','new_user');
+}
+function doLogout(){
+  saveCart();
+  currentUser=null;
+  localStorage.removeItem('dd_currentUser');
+  cart=[];
+  document.getElementById('userNavArea').innerHTML='<button class="btn btnSm btnOut" onclick="openAuth()" style="font-size:11px">Sign In</button>';
+  updateCartBadge();
+  closeAccount();
+  showToast('Signed out','info');
+}
+function mergeCart(a,b){
+  var merged=a.slice();
+  b.forEach(function(item){if(!merged.find(function(x){return x.id===item.id;}))merged.push(item);});
+  return merged;
+}
+
+// ══════════════════════════════════════════
+// CART
+// ══════════════════════════════════════════
+function saveCart(){
+  var key=currentUser?'dd_cart_'+currentUser.email:'dd_cart_guest';
+  localStorage.setItem(key,JSON.stringify(cart));
+}
+function addToCart(productId){
+  var p=allProducts.find(function(x){return x.id===productId;});
+  if(!p) return;
+  if(cart.find(function(x){return x.id===productId;})){showToast('Already in cart','info');return;}
+  cart.push({id:p.id,name:p.name,price:p.price,emoji:p.emoji,image:(p.images&&p.images.length?p.images[0]:'')});
+  saveCart();
+  updateCartBadge();
+  showToast('Added to cart 🛒','ok');
+}
+function addToCartFromModal(){
+  if(currentPdProduct) addToCart(currentPdProduct.id);
+  closePd();
+}
+function removeFromCart(productId){
+  cart=cart.filter(function(x){return x.id!==productId;});
+  saveCart();
+  updateCartBadge();
+  renderCart();
+}
+function updateCartBadge(){
+  var badge=document.getElementById('cartBadge');
+  if(cart.length>0){badge.style.display='flex';badge.textContent=cart.length;}
+  else{badge.style.display='none';}
+}
+function renderCart(){
+  var el=document.getElementById('cartItems');
+  var footer=document.getElementById('cartFooter');
+  if(!cart.length){
+    el.innerHTML='<div class="cartEmpty"><p style="font-size:32px">🛒</p><p style="margin-top:10px">Your cart is empty</p><p style="font-size:12px;margin-top:6px">Add products to get started</p></div>';
+    footer.style.display='none';
+    return;
+  }
+  footer.style.display='block';
+  el.innerHTML=cart.map(function(item){
+    var mediaHtml=item.image
+      ?(item.image.indexOf('data:video')===0
+        ?'<video src="'+item.image+'" style="width:100%;height:100%;object-fit:cover" muted playsinline></video>'
+        :'<img src="'+item.image+'" style="width:100%;height:100%;object-fit:cover"/>')
+      :(item.emoji||'🛍️');
+    return '<div class="cartItem"><div class="cartThumb">'+mediaHtml+'</div><div class="cartInfo"><div class="cartName">'+item.name+'</div><div class="cartPrice">'+item.price+'</div></div><button class="cartRm" onclick="removeFromCart('+item.id+')">🗑️</button></div>';
+  }).join('');
+  document.getElementById('cartTotal').textContent='GH₵ ('+cart.length+' item'+( cart.length!==1?'s':'')+')';
+  var waMsg='Hi! I want to order:\n'+cart.map(function(i,idx){return (idx+1)+'. '+i.name+' — '+i.price;}).join('\n')+'\n\nPlease confirm availability and total price. Thank you!';
+  document.getElementById('cartWaBtn').href='https://wa.me/'+WA+'?text='+encodeURIComponent(waMsg);
+}
+
+// ══════════════════════════════════════════
+// PRODUCTS
+// ══════════════════════════════════════════
+function renderCatFilters(){
+  var el=document.getElementById('catFilters');
+  var html='<button class="catBtn active" onclick="filterCat(\'all\',this)">All</button>';
+  allCategories.forEach(function(c){html+='<button class="catBtn" onclick="filterCat(\''+c.id+'\',this)">'+c.emoji+' '+c.name+'</button>';});
+  el.innerHTML=html;
+}
+function filterCat(cat,btn){
+  activeCategory=cat;
+  document.querySelectorAll('.catBtn').forEach(function(b){b.classList.remove('active');});
+  if(btn) btn.classList.add('active');
+  renderProducts();
+}
+function getMedia(p,size){
+  if(!p.images||!p.images.length) return '<div class="productMedia" style="font-size:44px">'+( p.emoji||'🛍️')+'</div>';
+  var src=p.images[0];
+  var isVid=src.indexOf('data:video')===0;
+  if(isVid) return '<div class="'+size+'"><video src="'+src+'" style="width:100%;height:100%;object-fit:cover" muted playsinline loop autoplay></video></div>';
+  return '<div class="'+size+'"><img src="'+src+'" alt="'+p.name+'" style="width:100%;height:100%;object-fit:cover"/></div>';
+}
+function renderProducts(){
+  var grid=document.getElementById('productsGrid');
+  var list=activeCategory==='all'?allProducts:allProducts.filter(function(p){return p.category===activeCategory;});
+  if(!list.length){grid.innerHTML='<div class="emptyGrid"><p style="font-size:32px">🛍️</p><p style="margin-top:12px">No products here yet.</p></div>';return;}
+  grid.innerHTML=list.map(function(p){
+    var cat=allCategories.find(function(c){return c.id===p.category;})||{name:p.category};
+    return '<div class="productCard">'
+      +'<div onclick="openProduct('+p.id+')">'+getMedia(p,'productMedia')+'</div>'
+      +'<div class="productInfo">'
+      +'<div class="productCat">'+cat.name+'</div>'
+      +'<div class="productName" onclick="openProduct('+p.id+')">'+p.name+'</div>'
+      +'<div class="productDesc">'+(p.description||'').substring(0,70)+'...</div>'
+      +'<div class="productFoot"><div class="productPrice">'+p.price+'</div>'
+      +'<button class="addCartBtn" onclick="addToCart('+p.id+')">Add to Cart</button>'
+      +'</div></div></div>';
+  }).join('');
+}
+
+// ══════════════════════════════════════════
+// PRODUCT DETAIL
+// ══════════════════════════════════════════
+function openProduct(id){
+  var p=allProducts.find(function(x){return x.id===id;});
+  if(!p) return;
+  currentPdProduct=p;
+  var cat=allCategories.find(function(c){return c.id===p.category;})||{name:p.category};
+  document.getElementById('pdCat').textContent=cat.name;
+  document.getElementById('pdName').textContent=p.name;
+  document.getElementById('pdDesc').textContent=p.description||'';
+  document.getElementById('pdSizes').textContent=p.sizes?'Sizes: '+p.sizes:'';
+  document.getElementById('pdPrice').textContent=p.price;
+  var waMsg='Hi! I\'m interested in '+p.name+' ('+p.price+')';
+  document.getElementById('pdWa').href='https://wa.me/'+WA+'?text='+encodeURIComponent(waMsg);
+  // Show first media
+  var imgs=p.images||[];
+  var mainEl=document.getElementById('pdMainMedia');
+  mainEl.className='pdMainImg';
+  if(imgs.length){
+    setMainMedia(mainEl,imgs[0]);
+  } else {
+    mainEl.innerHTML='<span style="font-size:60px">'+(p.emoji||'🛍️')+'</span>';
+  }
+  // Thumbnails
+  var thumbs=document.getElementById('pdThumbs');
+  thumbs.innerHTML=imgs.map(function(src,i){
+    var isVid=src.indexOf('data:video')===0;
+    var inner=isVid?'<video src="'+src+'" style="width:100%;height:100%;object-fit:cover" muted></video>':'<img src="'+src+'" style="width:100%;height:100%;object-fit:cover"/>';
+    return '<div class="pdThumb'+(i===0?' active':'')+'" onclick="selectThumb(this,\''+src+'\')">'+inner+'</div>';
+  }).join('');
+  document.getElementById('pdModal').classList.add('open');
+}
+function setMainMedia(el,src){
+  var isVid=src.indexOf('data:video')===0;
+  el.innerHTML=isVid?'<video src="'+src+'" style="width:100%;height:100%;object-fit:cover" controls autoplay muted playsinline></video>':'<img src="'+src+'" style="width:100%;height:100%;object-fit:cover"/>';
+}
+function selectThumb(thumb,src){
+  document.querySelectorAll('.pdThumb').forEach(function(t){t.classList.remove('active');});
+  thumb.classList.add('active');
+  setMainMedia(document.getElementById('pdMainMedia'),src);
+}
+function closePd(){document.getElementById('pdModal').classList.remove('open');}
+
+// ══════════════════════════════════════════
+// ACCOUNT / ORDER HISTORY
+// ══════════════════════════════════════════
+function openAccount(){
+  if(!currentUser){openAuth();return;}
+  document.getElementById('accountName').textContent=currentUser.name;
+  document.getElementById('accountEmail').textContent=currentUser.email;
+  var orders=currentUser.orders||[];
+  var oh=document.getElementById('orderHistory');
+  if(!orders.length){oh.innerHTML='<p style="font-size:13px;color:var(--muted)">No orders yet.</p>';} 
+  else {
+    oh.innerHTML=orders.map(function(o){
+      return '<div style="background:#111;border-radius:6px;padding:12px;margin-bottom:8px">'
+        +'<div style="font-size:11px;color:var(--muted);margin-bottom:4px">'+o.date+'</div>'
+        +'<div style="font-size:13px">'+o.items+'</div>'
+        +'</div>';
+    }).join('');
+  }
+  document.getElementById('accountOverlay').classList.add('open');
+}
+function closeAccount(){document.getElementById('accountOverlay').classList.remove('open');}
+
+// ══════════════════════════════════════════
+// CHATBOT
+// ══════════════════════════════════════════
+function toggleChat(){
+  var box=document.getElementById('chatBox');
+  box.classList.toggle('open');
+  if(!chatOpened&&box.classList.contains('open')){
+    chatOpened=true;
+    appendMsg('bot',botCfg.welcome);
+  }
+}
+function appendMsg(role,html){
+  var msgs=document.getElementById('chatMsgs');
+  var d=document.createElement('div');
+  d.className='cmsg'+(role==='user'?' user':'');
+  d.innerHTML='<div class="cava">'+(role==='user'?'👤':'🤖')+'</div><div class="cbubble">'+html+'</div>';
+  msgs.appendChild(d);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+function showTyping(){
+  var msgs=document.getElementById('chatMsgs');
+  var d=document.createElement('div');
+  d.className='cmsg';d.id='typing';
+  d.innerHTML='<div class="cava">🤖</div><div class="cbubble"><div class="typingDots"><span></span><span></span><span></span></div></div>';
+  msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;
+}
+function rmTyping(){var t=document.getElementById('typing');if(t)t.remove();}
+async function sendChat(){
+  var input=document.getElementById('chatInput');
+  var text=input.value.trim();
+  if(!text) return;
+  input.value='';
+  appendMsg('user',text);
+  chatHistory.push({role:'user',content:text});
+  showTyping();
+  try{
+    var productList=allProducts.map(function(p){
+      var cat=allCategories.find(function(c){return c.id===p.category;})||{name:p.category};
+      return p.name+' ('+cat.name+') — '+p.price+(p.sizes?' sizes:'+p.sizes:'')+(p.description?' — '+p.description:'');
+    }).join('\n');
+    var sys='You are '+botCfg.name+' for D Deals shop in Accra Ghana. RULES: 1) Keep replies to 1-2 sentences max. 2) Be direct. 3) Answer from product list below. 4) Only offer WhatsApp when customer wants to ORDER. Business: '+botCfg.info+'\nProducts:\n'+(productList||'none yet');
+    var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:150,system:sys,messages:chatHistory.slice(-10).map(function(m){return {role:m.role,content:m.content};})})} );
+    var data=await res.json();
+    rmTyping();
+    var reply=(data.content&&data.content[0]&&data.content[0].text)||"I'm having trouble right now, please try again!";
+    chatHistory.push({role:'assistant',content:reply});
+    appendMsg('bot',reply);
+    var orderWords=['order','buy','i want','get one','purchase'];
+    if(orderWords.some(function(w){return text.toLowerCase().indexOf(w)!==-1;})){
+      setTimeout(function(){appendMsg('bot','Ready? <a href="https://wa.me/'+WA+'?text='+encodeURIComponent('Hi! I want to order: '+text)+'" target="_blank">Order on WhatsApp →</a>');},600);
+    }
+  }catch(e){
+    rmTyping();
+    logNotification(text,'chatbot error');
+    appendMsg('bot','Sorry! <a href="https://wa.me/'+WA+'" target="_blank">Message us directly →</a>');
+  }
+}
+function logNotification(msg,ctx){
+  try{
+    var n=JSON.parse(ls('dd_notifs')||'[]');
+    n.unshift({id:Date.now(),msg:msg,context:ctx||'',time:new Date().toLocaleString(),read:false});
+    localStorage.setItem('dd_notifs',JSON.stringify(n));
+  }catch(e){}
+}
+
+// ══════════════════════════════════════════
+// UI HELPERS
+// ══════════════════════════════════════════
+function openCart(){renderCart();document.getElementById('cartOverlay').classList.add('open');}
+function closeCart(){document.getElementById('cartOverlay').classList.remove('open');}
+function openAuth(){document.getElementById('authModal').classList.add('open');}
+function closeAuth(){document.getElementById('authModal').classList.remove('open');}
+function switchTab(tab){
+  document.querySelectorAll('.modalTab').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.tabContent').forEach(function(t){t.classList.remove('active');});
+  document.getElementById(tab+'Tab').classList.add('active');
+  document.getElementById(tab+'Content').classList.add('active');
+}
+function showToast(msg,type){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast '+(type||'ok');t.style.display='block';
+  clearTimeout(window._tt);window._tt=setTimeout(function(){t.style.display='none';},3000);
+}
+
+// ══════════════════════════════════════════
+// APPEARANCE
+// ══════════════════════════════════════════
+function applyAppearance(){
+  var defaults={siteName:'D Deals',logoText:'D Deals',hero1:'Where Style Meets',hero2:'Every Deal',heroSub:'Watches, jewelry, sneakers, bags, glasses, customized gifts and more.',footer:'Premium deals delivered in Accra, Ghana',goldColor:'#c9a84c',bgColor:'#0a0a0a',cardColor:'#1a1a1a',textColor:'#f5f5f0'};
+  var a=Object.assign({},defaults,JSON.parse(ls('dd_appearance')||'{}'));
+  // Apply CSS variables
+  var root=document.documentElement;
+  root.style.setProperty('--gold',a.goldColor);
+  root.style.setProperty('--goldL',lighten(a.goldColor));
+  root.style.setProperty('--black',a.bgColor);
+  root.style.setProperty('--grey',a.cardColor);
+  root.style.setProperty('--white',a.textColor);
+  // Apply text
+  document.title=a.siteName+' – Premium Deals';
+  var logo=document.querySelector('.logo');if(logo)logo.textContent=a.logoText;
+  var h1=document.querySelector('.hero h1');
+  if(h1)h1.innerHTML=a.hero1+' <em>'+a.hero2+'</em>';
+  var hsub=document.querySelector('.hero > p');if(hsub)hsub.textContent=a.heroSub;
+  var footLogo=document.querySelector('.footLogo');if(footLogo)footLogo.textContent=a.logoText;
+  var footTxt=document.querySelector('footer > p');if(footTxt)footTxt.textContent=a.footer;
+}
+function lighten(hex){
+  // Make a slightly lighter version of the color
+  var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  r=Math.min(255,r+30);g=Math.min(255,g+30);b=Math.min(255,b+30);
+  return '#'+[r,g,b].map(function(x){return x.toString(16).padStart(2,'0');}).join('');
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+loadData();
+loadUser();
+renderCatFilters();
+renderProducts();
+</script>
+</body>
+</html>
